@@ -8,7 +8,6 @@ node {
         sh 'cd k8s_project'
     }
 
-    
     stage('Run kubectl') {
         withKubeConfig([credentialsId: "kubectl-deploy-credentials"]){
 
