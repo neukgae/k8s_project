@@ -22,12 +22,15 @@ pipeline {
         }
         
         stage('build') {
-            steps {
-		        sh 'kubectl create secret generic mysql-password --from-literal=password=test123'
-		    	sh 'kubectl create -f mysql.yaml'
-		    	sh 'kubectl create -f mysql-service.yaml'
-		    	sh 'kubectl create -f wordpress.yaml'
-		    	sh 'kubectl create -f wordpress-service.yaml'
+			withKubeConfig([credentialsId: 'kubernetes-config']) {
+					sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+					sh 'chmod u+x ./kubectl'  
+					sh './kubectl get pods'
+		        	sh 'kubectl create secret generic mysql-password --from-literal=password=test123'
+			    	sh 'kubectl create -f mysql.yaml'
+			    	sh 'kubectl create -f mysql-service.yaml'
+			    	sh 'kubectl create -f wordpress.yaml'
+		    		sh 'kubectl create -f wordpress-service.yaml'
             }
         }
     }
