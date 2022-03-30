@@ -9,7 +9,8 @@ node {
         }
     }
     stage('Kubernetes'){
-        withKubeConfig([credentialsId: "kubectl-deploy-credentials"]){
+        withKubeConfig([credentialsId: "kubectl-deploy-credentials",
+			serverUrl: "http://ec2-13-209-21-16.ap-northeast-2.compute.amazonaws.com/"]){
             sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
 	    sh "chmod u+x ./kubectl"
             sh "./kubectl get pods"
