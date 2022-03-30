@@ -9,7 +9,6 @@ node {
     }
 
     stage('Run kubectl') {
-        container('kubectl') {
         withKubeConfig([credentialsId: "kubectl-deploy-credentials"]){
             sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
 	    sh "chmod u+x ./kubectl"
@@ -19,7 +18,6 @@ node {
             sh "kubectl create -f mysql-service.yaml"
             sh "kubectl create -f wordpress.yaml"
             sh "kubectl create -f wordpress-service.yaml"
-            }
         }
     }
 }
