@@ -4,7 +4,6 @@ node {
     }
 
     stage('Build to ECR'){
-
         
     }
     stage('Kubernetes'){
