@@ -1,4 +1,4 @@
-node('master') {
+node {
     stage('Checkout') {
         sh 'rm -rf k8s_project'
         sh 'git clone -b main https://github.com/neukgae/k8s_project'
