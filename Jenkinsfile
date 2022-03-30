@@ -1,7 +1,7 @@
-node('builder') {
+node('master') {
     stage('Checkout') {
         sh 'rm -rf k8s_project'
-        sh 'git clone -b main https://github.com/neukgae/k8s_project'   // github으로부터 소스 다운
+        sh 'git clone -b main https://github.com/neukgae/k8s_project'
     }
     
     stage('move') {
@@ -12,7 +12,7 @@ node('builder') {
         container('kubectl') {
         withKubeConfig([credentialsId: "kubectl-deploy-credentials"]){
             sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
-	        sh "chmod u+x ./kubectl"
+	    sh "chmod u+x ./kubectl"
             sh "./kubectl get pods"
             sh "kubectl create secret generic mysql-password --from-literal=password=test123"
             sh "kubectl create -f mysql.yaml"
